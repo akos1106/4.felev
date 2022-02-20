@@ -1,0 +1,18 @@
+libname proclib 'SAS-library';
+proc sql;
+   create table work.tilalmi_ido
+       (magyar_nev char(30),
+        tudomanyos_nev char(40),
+        fajlagos_tilalmi_idoszak char(20),
+        _2021-ben char(20),
+        legkisebb_kifoghato_meret char(20),
+        naponta_kifoghato_mennyiseg char(10),);
+insert into work.tilalmi_ido
+    values('csuka','Esox lucius','02. 01 - 03. 31.','02. 01 - 03. 31.','lehalább 40 cm','3 db')
+    values('balin','Aspius aspius','03. 01 - 04. 30.','03. 01 - 04. 30.','lehalább 40 cm','3 db')
+    values('sügér','Perca fluviatilis','03. 01 - 04. 30.','03. 01 - 04. 30.','lehalább 15 cm','3 kg')
+    values('fogassüllő','Sander lucioperca','03. 01 - 04. 30.','03. 01 - 04. 30.','lehalább 30 cm','3 db');
+title 'Őshonos, fogható halfajok fajlagos tilalmi ideje, kifogható mérettertománya, valamint a horgászatra és a rekreációs célú halászatra vonatkozó napi kifogható darabszáma';
+select *
+   from work.tilalmi_ido;
+proc printto; run;
