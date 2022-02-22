@@ -1,0 +1,106 @@
+set SERVEROUTPUT ON;
+
+/*
+declare
+v_name varhcar2(100);
+v_salary employees.salary%type;
+
+begin
+select first_nam||' '||last_name, salary
+into v_name,v_salary
+from employees
+where employee_id=&n;
+bdms_output.put_line('The salary of'||v_name||'is'||v_salary||'.');
+end;
+/
+
+create table employees_copy as select * from employees;
+
+select * from employees_copy;
+
+--
+begin
+
+for i in 207..216 loop
+
+insert into employees_copy
+(employee_id,first_name,last_name,email,hire_date,job_id,salary)
+values
+(i,'Employee','#'||i, 'emp'||i||'mailkukacgmail.com',sysdate,'st_clerk',8000);
+end loop;
+end;
+*/
+--
+
+
+declare
+    v_empid_a employees.employee_id%type :=160;
+    v_empid_b employees.employee_id%type :=162;
+    v_salary_a employees.salary%type;
+    v_salary_b employees.salary%type;
+
+begin
+    select salary into v_salary_a from employees
+    where employee_id=v_empid_a;
+    
+    select salary into v_salary_b from employees
+    where employee_id=v_empid_b;
+
+    if v_salary_a<v_salary_b then
+        update employees
+        set salary=v_salary_b
+        where employee_id=v_empid_a;
+    else
+        update employees
+        set salary=v_salary_a
+        where employee_id=v_empid_b;
+    end if;
+end;
+/
+
+select * from employees;
+
+--
+declare
+    v_id employees.employee_id%type :=100;
+    v_exp number;
+    v_mult number(3,2);
+
+begin
+    select (sysdate-hire_date)/365 into v_exp from employees
+    where employee_id=v_id;
+
+    case
+        when v_exp>15
+        then v_mult:=1.25;
+        when v_exp<=15 and v_exp>10
+        then v_mult:=1.15;
+        when v_exp<=10 and v_exp>5
+        then v_mult:=1.05;
+        else v_mult:=1.02;
+    end case;
+    
+    update employees 
+    set salary=salary*v_mult 
+    where employee_id=v_id;
+
+end;
+/
+
+--
+
+
+declare
+v_year number(4):=2005;
+v_num number(3);
+
+begin
+    for m in 1..12 loop
+        select count(*) into v_num from employees
+        where v_year=extract(year from hire_date) and m=extract(month from hire_date);
+        dbms_output.put_line(m||' - '||v_num);
+    end loop;
+
+end;
+/
+
