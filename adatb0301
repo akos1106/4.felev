@@ -1,0 +1,62 @@
+set SERVEROUTPUT ON;
+clear screen;
+
+/*
+declare 
+    v_empl employees%rowtype;
+    v_name employees.first_name%type :='James';
+    
+begin
+    select * into v_empl from employees where first_name=v_name;
+    DBMS_OUTPUT.PUT_LINE(v_empl.first_name||' '||v_empl.last_name||'-'||to_char(v_empl.hire_date,'YYYY-MM-DD'));
+    
+    exception
+        when NO_DATA_FOUND THEN
+                DBMS_OUTPUT.PUT_LINE('Nincs ilyen dolgozo');
+        when TOO_MANY_ROWS THEN
+                DBMS_OUTPUT.PUT_LINE('Több ilyen dologozo van');
+
+end;
+*/
+
+
+/*
+declare
+r number(1);
+TYPE t_hist IS VARRAY(5) OF pls_integer;
+v_hist t_hist:=t_hist(0,0,0,0,0);
+
+
+begin
+    for i in 1..100 loop
+         r:=trunc(DBMS_random.value(1,6));
+         v_hist(r):=v_hist(r)+1;
+    end loop;
+    
+    for i in 1..v_hist.count loop
+        DBMS_OUTPUT.PUT_LINE(i ||' '||v_hist(i));
+    end loop;
+end;
+*/
+
+
+declare
+type t_rec is record (v_id employees.employee_id%type, sal employees.salary%type);
+type t_tomb is varray(10) of t_rec;
+v_tomb t_tomb:=t_tomb();
+v_id number(3);
+
+begin
+    for i in 1..10 loop
+        v_id:=trunc(DBMS_random.value(100,207));
+        v_tomb.extend;
+        select employee_id, salary into v_tomb(v_tomb.last) from employees where employee_id=v_id;
+    end loop;
+    
+    for i in 1..v_tomb.count loop
+        DBMS_OUTPUT.PUT_LINE(v_tomb(i).v_id||' : '||v_tomb(i).sal);
+    end loop;
+end;
+
+
+
