@@ -1,0 +1,140 @@
+DECLARE
+    TYPE t_a IS TABLE OF NUMBER(3) INDEX BY PLS_INTEGER;
+    v_a t_a;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE(v_a(1));
+    EXCEPTION WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE(SQLCODE || ' ' || SQLERRM);
+END;
+*/
+
+/*
+declare
+    type T_NT is table of number;
+    V1 T_NT :=T_NT(1,2,3);
+    V2 T_NT :=T_NT(1,2,3,3);
+    --V2 T_NT :=T_NT(1,2,3);
+
+begin
+    if V1=V2 then DBMS_OUTPUT.PUT_LINE('Ugyanazok');
+    else DBMS_OUTPUT.PUT_LINE('Nem ugyanazok');
+    end if;
+end;
+*/
+
+
+/*
+DECLARE
+    TYPE T_NT IS TABLE OF EMPLOYEES%ROWTYPE;
+    V_NT T_NT;
+BEGIN
+SELECT *
+    BULK COLLECT INTO V_NT
+    FROM EMPLOYEES
+    WHERE DEPARTMENT_ID = 50; --50es reszlegen dolgozók neve
+    FOR I IN 1 .. V_NT.COUNT
+    LOOP
+        DBMS_OUTPUT.PUT_LINE(V_NT(I).LAST_NAME);
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE(V_NT.count);  --ott dolgozók dbszáma
+END;
+*/
+
+
+/*
+declare
+    type T_NT is table of locations%rowtype;
+    V_NT T_NT;
+begin
+    select * 
+    bulk collect into V_NT
+    from locations
+    where country_id='US';
+    FOR i IN 1 .. V_NT.COUNT
+        LOOP
+            DBMS_OUTPUT.PUT_LINE('State: '||V_NT(i).state_province||' - City: '||V_NT(i).city);
+        END LOOP;
+end;
+
+--vagy, kevesebb helyet foglal ha 10000 oszlop van
+
+declare
+    type t_rec is record(c locations.city%type,s locations.state_province%type);
+    type T_NT is table of t_rec;
+    V_NT T_NT;
+begin
+    select city, state_province 
+    bulk collect into V_NT
+    from locations
+    where country_id='US';
+    FOR i IN 1 .. V_NT.COUNT
+        LOOP
+            DBMS_OUTPUT.PUT_LINE('State: '||V_NT(i).s||' - City: '||V_NT(i).c);
+        END LOOP;
+end;
+*/
+
+
+
+/*
+create table employees_sen as select * from employees where 1=2;
+select * from employees_sen;
+
+
+declare
+    type T_EMP is table of employees%rowtype index by PLS_INTEGER;
+    V_EMP T_EMP;
+    V_EMP_SEN T_EMP;
+    idx PLS_INTEGER;
+begin
+    select * bulk collect
+    into V_EMP
+    from employees;
+    idx:=V_EMP.FIRST;
+    while idx is not null loop
+    begin
+        if V_EMP_SEN(V_EMP(idx).department_id).hire_date > V_EMP(idx).hire_date then
+            V_EMP_SEN(V_EMP(idx).department_id) := V_EMP(idx);
+        end if;
+        idx:=V_EMP.next(idx);
+        exception 
+                    when no_data_found  then V_EMP_SEN(V_EMP(idx).department_id) := V_EMP(idx);
+                                            idx:=V_EMP.next(idx);
+                    when value_error    then idx:=V_EMP.next(idx);
+        end;
+    end loop;   
+    idx:=V_EMP_sen.FIRST;
+    while idx is not null loop
+        v_emp_sen(idx).salary := v_EMP_SEn(idx).salary*1.25;
+        insert into employees_sen values v_emp_sen(idx);
+        idx:= v_emp_sen.next(idx);
+    end loop;
+end;
+
+select * from employees_sen;
+*/
+
+
+declare
+    type t_rec is record(emp_id employees.employee_id%type,sal employees.salary%type,hd employees.hire_date%type);
+    type T_arr is table of t_rec index by PLS_INTEGER;
+    V_emp T_arr;
+    max_ratio_id employees.employee_id%type;
+    ratio number;
+    max_ratio number :=0.0;
+    v employees%rowtype;
+begin
+    select employee_id, salary, hire_date 
+    bulk collect into v_emp 
+    from employees;
+    
+    for i in 1..v_emp.count loop
+        ratio := v_emp(i).sal/(sysdate - v_emp(i).hd);
+        if max_ratio<ratio then max_ratio := ratio;
+        max_ratio_id := v_emp(i).emp_id;
+        end if;
+    
+    end loop;
+    select * into v from employees where employee_id=max_ratio_id;
+    DBMS_OUTPUT.PUT_LINE(v.first_name ||' '||v.last_name);
+end;
