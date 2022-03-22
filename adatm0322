@@ -1,0 +1,118 @@
+set SERVEROUTPUT ON;
+/*
+CREATE TABLE FORALL_EXC (NUM NUMBER(1));
+
+DECLARE
+TYPE t_nt IS TABLE OF NUMBER(5);
+v_nt t_nt := t_nt(1, 5, 30);
+BEGIN
+FORALL I IN INDICES OF V_NT
+INSERT INTO FORALL_EXC VALUES (v_nt(I));
+EXCEPTION WHEN OTHERS THEN NULL;
+END;
+
+select * from FORALL_EXC;
+
+*/
+
+
+/*
+declare 
+    cursor emp --return employees%rowtype
+    is select * from employees 
+    where salary>10000;
+    v_employees employees%ROWTYPE;
+
+begin
+open emp;
+loop
+    fetch emp into v_employees;
+    exit when emp%notfound;
+    DBMS_OUTPUT.PUT_LINE(v_employees.first_name||' '|| v_employees.last_name||': '||v_employees.salary);
+end loop;
+close emp;
+end;
+*/
+------------------vagy
+
+/*
+declare
+    cursor c(p_min_sal number) is
+    select first_name||' '||last_name,salary from employees
+    where salary>p_min_sal;
+    v_name varchar(100);
+    v_sal employees.salary%type;
+begin
+    open c(10000);
+    loop
+        fetch c into v_name,v_sal;
+        exit when c%notfound;
+        DBMS_OUTPUT.PUT_LINE(v_name ||': '||v_sal);
+    end loop;
+    close c;
+end;
+*/
+
+
+----------------
+/*
+declare
+    type t_arr is table of PLS_INTEGER index by pls_integer; --legekőre kell a type
+    
+    cursor c(p_min_sal number :=10000) is
+    select first_name||' '||last_name,salary from employees
+    where salary>p_min_sal;
+    v_sal employees.salary%type;
+    
+    v_name varchar(100);
+    v_arr t_arr;
+    idx number;
+begin
+    open c(0);
+    loop
+        fetch c into v_name,v_sal;
+        exit when c%notfound;
+        DBMS_OUTPUT.PUT_LINE(v_name ||': '||v_sal);
+        begin
+            v_arr(v_sal) :=v_arr(v_sal)+1;
+            exception when NO_DATA_FOUND then v_arr(v_sal) :=1;
+        end;
+    end loop;
+    close c;
+    DBMS_OUTPUT.new_line;
+    idx:= v_arr.first;
+    while idx is not null loop
+        DBMS_OUTPUT.PUT_LINE(idx ||' '||v_arr(idx));
+        idx:=v_arr.next(idx);
+    end loop;
+end;
+*/
+-------------
+/*
+declare
+type t_random is varray(10) of number;
+v_random t_random;
+begin
+null;
+end;
+*/
+create table emp_temp as select first_name,last_name,salary from employees where 1=2;
+SELECT * FROM emp_temp;
+
+declare
+    type t_nt is table of emp_temp%rowtype;
+    type t_a is table of pls_integer index by PLS_INTEGER;
+    v_nt t_nt;
+    v_a t_a;
+    n number:=10;
+begin
+    select first_name,last_name,salary bulk collect into v_nt from employees;
+    while v_a.count<n loop
+       r:=trunc(DBMS_RANDOM.value(1,v_nt.count+1));
+       v_a(r):=r;
+    end loop;
+    forall i in values of v_a
+    insert into emp_temp values v_nt(i);
+end;
+
+
