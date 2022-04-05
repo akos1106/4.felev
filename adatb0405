@@ -1,0 +1,104 @@
+set SERVEROUTPUT on;
+
+/*
+CREATE TABLE num_table(num NUMBER);
+/
+CREATE OR REPLACE TRIGGER tr_double
+BEFORE INSERT ON num_table
+FOR EACH ROW
+BEGIN
+:NEW.num := :NEW.num * 2;
+END tr_double;
+/
+INSERT INTO num_table VALUES(5);
+/
+SELECT * FROM num_table;
+*/
+
+----------------------------------------------------------------------
+--RAISE_APPLICATION_ERROR(-20000,'HIBA')
+/*
+create or replace trigger tr_chech_sal
+before update of salary 
+on employees
+for each row
+begin
+
+if :old.salary>:new.salary
+    then RAISE_APPLICATION_ERROR(-20000,'Túl alacsony a fizetes');
+end if;
+
+end tr_chech_sal;
+/
+update employees
+set salary=salary*0.9;
+/
+select * from employees;
+*/
+
+---------------------------------------------------------------------
+/*
+CREATE TABLE test_table(val_num NUMBER);
+drop table test_table;
+/
+create or replace trigger k_check_dml
+after INSERT OR UPDATE OR DELETE on test_table
+begin
+
+if inserting then DBMS_OUTPUT.PUT_LINE('insert performed at '||to_char(sysdate,'HH:MI:SS'));
+elsif updating then DBMS_OUTPUT.PUT_LINE('update performed at '||to_char(sysdate,'HH:MI:SS'));
+elsif deleting then DBMS_OUTPUT.PUT_LINE('delete performed at '||to_char(sysdate,'HH:MI:SS'));
+end if;
+end;
+
+/
+insert into test_table values(10);
+update test_table set val_num=10;
+*/
+
+---------------------------------------------------------------------
+
+/*
+create or replace trigger tr_updated_sal
+after update of salary 
+on employees
+for each row
+begin
+
+DBMS_OUTPUT.PUT_LINE(to_char(:old.employee_id)||
+' - old: '||to_char(:old.salary)||
+', new: '||to_char(:new.salary)||
+', diff: '||to_char((:new.salary-:old.salary)));
+
+end;
+/
+update employees
+set salary=salary*1.2;
+*/
+
+---------------------------------------------------------------------
+
+CREATE TABLE HR_LOG(
+mod_date date,
+mod_action varchar2(50),
+emp_id number(6,0));
+drop table HR_LOG;
+
+/
+create or replace trigger k_logging
+after INSERT OR UPDATE OR DELETE on employees
+for each row
+begin
+
+if inserting then insert into HR_LOG values(sysadte,'Dolgozó felvéve',:new.employee_id);
+elsif updating then insert into HR_LOG values(sysadte,'Dolgozó frissítve',:old.employee_id);
+elsif deleting then insert into HR_LOG values(sysadte,'Dolgozó törölve',:old.employee_id);
+end if;
+end;
+
+/
+update employees
+set department_id=60000
+where employee_id=103;
+
+select * from HR_LOG;
