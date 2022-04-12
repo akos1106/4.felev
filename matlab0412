@@ -1,0 +1,428 @@
+>> myintegT(0,1,3)
+Array indices must be positive integers or logical values.
+
+Error in myintegT (line 6)
+y([0,length(y)])=[];
+ 
+>> myintegT(0,1,3)
+
+ans =
+
+    0.7400
+
+>> myintegT(0,1,6)
+
+ans =
+
+    0.7451
+
+>> myintegT(0,1,6)
+
+ans =
+
+    0.7451
+
+>> myintegT(0,1,12)
+
+ans =
+
+    0.7464
+
+>> derivate(exp(-x.^2))
+Unrecognized function or variable 'x'.
+ 
+>> diff(exp(-x.^2))
+Unrecognized function or variable 'x'.
+ 
+>> diff(exp(-x.^2),x)
+Unrecognized function or variable 'x'.
+ 
+>> exp(0)*(4*0*0-2)
+
+ans =
+
+    -2
+
+>> exp(1)*(4*1*1-2)
+
+ans =
+
+    5.4366
+
+>> exp(0.5*0.5)*(4*0.5*0.5-2)
+
+ans =
+
+   -1.2840
+
+>> hiba=(b-a)^3/(12*m^2)*M
+Unrecognized function or variable 'b'.
+ 
+>> a=0;b=1;m=12;M=0.73575888
+
+M =
+
+    0.7358
+
+>> hiba=(b-a)^3/(12*m^2)*m
+
+hiba =
+
+    0.0069
+
+>> a=0
+
+a =
+
+     0
+
+>> b=1
+
+b =
+
+     1
+
+>> m=12
+
+m =
+
+    12
+
+>> M=0.73575888
+
+M =
+
+    0.7358
+
+>> hiba=(b-a)^3/(12*m^2)*M
+
+hiba =
+
+   4.2579e-04
+
+>> m=5
+
+m =
+
+     5
+
+>> hiba=(b-a)^3/(12*m^2)*M
+
+hiba =
+
+    0.0025
+
+>> m=8
+
+m =
+
+     8
+
+>> hiba=(b-a)^3/(12*m^2)*M
+
+hiba =
+
+   9.5802e-04
+
+>> m=7
+
+m =
+
+     7
+
+>> hiba=(b-a)^3/(12*m^2)*M
+
+hiba =
+
+    0.0013
+
+>> myintegS(0,1,3)
+
+ans =
+
+    1.0882
+
+>> myintegS(0,1,3)
+
+ans =
+
+    1.0882
+
+>> myintegS(0,1,3)
+
+ans =
+
+    0.4197
+
+>> myintegS(0,1,3)
+
+ans =
+
+    0.7468
+
+>> a=0
+
+a =
+
+     0
+
+>> b=1
+
+b =
+
+     1
+
+>> m=10
+
+m =
+
+    10
+
+>> M=12
+
+M =
+
+    12
+
+>> (b-a)^5/(2880*m*m*m*m)*M
+
+ans =
+
+   4.1667e-07
+
+>> m=6
+
+m =
+
+     6
+
+>> (b-a)^5/(2880*m*m*m*m)*M
+
+ans =
+
+   3.2150e-06
+
+>> m=12
+
+m =
+
+    12
+
+>> (b-a)^5/(2880*m*m*m*m)*M
+
+ans =
+
+   2.0094e-07
+
+>> m=3
+
+m =
+
+     3
+
+>> (b-a)^5/(2880*m*m*m*m)*M
+
+ans =
+
+   5.1440e-05
+
+>> format long
+>> (b-a)^5/(2880*m*m*m*m)*M
+
+ans =
+
+     5.144032921810699e-05
+
+>> m=2
+
+m =
+
+     2
+
+>> (b-a)^5/(2880*m*m*m*m)*M
+
+ans =
+
+     2.604166666666667e-04
+
+>> f=@(x) exp(-x.^2);
+>> m=3
+
+m =
+
+     3
+
+>> myintegS(0,1,m)
+
+ans =
+
+   0.746830391489345
+
+>> myintegT(0,1,,)
+ myintegT(0,1,,)
+              ↑
+Invalid expression. When calling a function or indexing a variable, use parentheses.
+Otherwise, check for mismatched delimiters.
+ 
+>> myintegT(0,1,m)
+
+ans =
+
+   0.739986475276682
+
+>> integral(f,0,1)
+
+ans =
+
+   0.746824132812427
+
+>> integral(f,0,1)
+
+ans =
+
+   0.746824132812427
+
+>> myintegT(0,1,m)
+
+ans =
+
+   0.739986475276682
+
+>> myintegS(0,1,m)
+
+ans =
+
+   0.746830391489345
+
+>> x=0:5:60;
+>> f=[ 2.2 2.8 3 3 2.7 2.5 2.4 2.9 3.3 3.5 3.5 3.3 3];
+>>  trapz(x,f)
+
+ans =
+
+     1.775000000000000e+02
+
+>> f=@(x) x.*sin(x.^2)
+
+f =
+
+  function_handle with value:
+
+    @(x)x.*sin(x.^2)
+
+>> integral(f,-pi/2,pi/2)
+
+ans =
+
+    -1.249000902703301e-16
+
+>> integral(@(x)1./sqrt(2*pi).*exp(-(x.^2)./2),-inf,inf)
+
+ans =
+
+   1.000000000000038
+
+>> integral(@(x)sqrt(1-x.^2),-1,1)
+
+ans =
+
+   1.570796326794897
+
+>> integral(@(x)x.*sin(5.*x),0,10)
+
+ans =
+
+  -1.940427051132369
+
+>> xi=0:10
+
+xi =
+
+     0     1     2     3     4     5     6     7     8     9    10
+
+>> f=@(x)x.*sin(5.*x)
+
+f =
+
+  function_handle with value:
+
+    @(x)x.*sin(5.*x)
+
+>> yi=f(xi)
+
+yi =
+
+  Columns 1 through 4
+
+                   0  -0.958924274663138  -1.088042221778740   1.950863520471350
+
+  Columns 5 through 8
+
+   3.651781002910511  -0.661758750488865  -5.928189744557171  -2.997278686473057
+
+  Columns 9 through 11
+
+   5.960905283834791   7.658131720807066  -2.623748537039288
+
+>> trapz(xi,yi)
+
+ans =
+
+   6.275613581543102
+
+>> xi=[0 0.5:9.5 10];
+>> yi=f(xi)
+
+yi =
+
+  Columns 1 through 4
+
+                   0   0.299236072051978   1.406999965162108  -0.165804743378002
+
+  Columns 5 through 8
+
+  -3.414691019138552  -2.192285306072293   3.845820174103038   5.745157753047899
+
+  Columns 9 through 12
+
+  -1.483490997273467  -8.466735276516548  -3.489400816774817  -2.623748537039288
+
+>> trapz(xi,yi)
+
+ans =
+
+  -7.773590142867768
+
+>> xx=linspace(0,10);
+>> yy=f(xx);
+>> plot(xx,yy)
+>> x=0:15; y=0:10;
+>> [X,Y]=meshgrid(x,y);
+>> x=linspace(-2,2);
+>> y=linspace(-1,1);
+>>  [xx,yy] = meshgrid(x,y);
+>> zz = xx.*exp(-xx.^2-yy.^2);
+>> figure; mesh(xx,yy,zz)
+>> f= @(x,y) x.*exp(-x.^2-y.^2)
+
+f =
+
+  function_handle with value:
+
+    @(x,y)x.*exp(-x.^2-y.^2)
+
+>> x=linspace(-2,2);
+>> y=linspace(-1,1);
+>> [xx,yy] = meshgrid(x,y);
+>> zz=sqrt(1-xx.^2-yy.^2);
+>> x=linspace(0,2);
+>> y=linspace(0,1);
+>> [xx,yy] = meshgrid(x,y);
+>> zz=sqrt(1-xx.^2-yy.^2);
+>> figure; mesh(xx,yy,zz)
+Error using mesh (line 71)
+X, Y, Z, and C cannot be complex.
+ 
+>> zz=sqrt(1+xx.^2+yy.^2);
+>> figure; mesh(xx,yy,zz)
+>> 
