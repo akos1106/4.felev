@@ -1,0 +1,75 @@
+set serveroutput ON;
+/*
+--a) feladat
+create or replace package pkg1 as
+    procedure update_salary(p_employee_id   employees.employee_id%type,
+                            p_salary        employees.salary%type);
+    ----------
+    procedure change_job(   p_employee_id      employees.employee_id%type,
+                            p_salary        employees.salary%type := NULL,
+                            p_job_id        employees.job_id%type := NULL,
+                            p_dept_id       employees.department_id%type := NULL);
+end pkg1;
+
+/
+
+create or replace package body pkg1 as
+    procedure update_salary(p_employee_id employees.employee_id%type,
+                            p_salary employees.salary%type) is
+    begin
+        update employees set salary=p_salary where employee_id=p_employee_id;
+    end;
+    --------
+    procedure change_job(   p_employee_id      employees.employee_id%type,
+                            p_salary        employees.salary%type := NULL,
+                            p_job_id        employees.job_id%type := NULL,
+                            p_dept_id       employees.department_id%type := NULL) is
+    begin
+        update employees set    salary=nvl(p_salary,salary), 
+                                job_id=nvl(p_job_id,job_id),
+                                department_id=nvl(p_dept_id,department_id)
+        where employee_id=p_employee_id;
+    end;
+end pkg1;
+
+/
+
+declare 
+    v_salary employees.salary%type;
+    v_job_id jobs.job_id%type;
+begin
+    select job_id into v_job_id from employees where employee_id=115;
+    select max_salary into v_salary from jobs where job_id=v_job_id;
+    pkg1.update_salary(115,v_salary);
+    --------
+    select min_salary into v_salary from jobs where job_id='ST_MAN';
+    pkg1.change_job(129,v_salary,p_job_id=>'ST_MAN');
+end;
+
+/
+select *  from employees where employee_id=115;
+/
+select * from employees where employee_id=129;
+*/
+
+declare
+    type t_job_ids is table of jobs.job_id%type;
+    ids t_job_ids;
+    FUNCTION f_job_ids(p_dept_id departments.department_id%type)
+    return t_job_ids is
+    v_job_ids t_job_ids;
+    begin
+        select distinct job_id bulk collect into v_job_ids from employees where department_id=p_dept_id;
+        return v_job_ids;
+    end;
+begin
+    for c in(select * from departments) loop
+        ids:=f_job_ids(c.department_id);
+        if ids.count>=2 then dbms_output.put_line(c.department_name||' '||ids.count);
+        end if;
+    end loop;
+end;
+
+
+
+
