@@ -84,8 +84,8 @@ END;
 
 /
 
----employeesról másolat
-CREATE TABLE employees_tmp2 AS SELECT * FROM employees;
+CREATE ---employeesról másolat 
+TABLE employees_tmp AS SELECT * FROM employees;
 
 /
 
