@@ -1,0 +1,492 @@
+function [gy,k]=felezo(a,b,e,maxit)
+    f=@(x) x.^3-3.*x-2;
+
+    if f(a)*f(b)>0
+        error(' Nem találunk gyököt ')
+    end
+
+    %felezési pont számolása
+    x0=a;
+    x1=b;
+    x2=(x0+x1)/2;
+
+    k=0;
+    while f(x2) ~= 0 & k<maxit & abs(x1-x0) > e
+        x2=(x0+x1)/2;
+        if f(x0)*f(x2)<0
+            x1=x2;
+        end
+        if f(x1)*f(x2)<0
+            x0=x2;
+        end
+        k=k+1;
+    end
+    
+    gy=x2;
+    if maxit==k
+        fprintf('maxit-et elérte, az eredmény nem pontos')
+    end
+end
+----------------------------
+function [gy,k]=felezorajzol(a,b,e,maxit)
+    f=@(x) x.^3-3.*x-2;
+
+    if f(a)*f(b)>0
+        error(' Nem találunk gyököt ')
+    end
+
+    %felezési pont számolása
+    x0=a;
+    x1=b;
+    x2=(x0+x1)/2;
+
+    k=0;
+    while f(x2) ~= 0 & k<maxit & abs(x1-x0) > e
+        x2=(x0+x1)/2;
+        if f(x0)*f(x2)<0
+            x1=x2;
+        end
+        if f(x1)*f(x2)<0
+            x0=x2;
+        end
+        k=k+1;
+    end
+    
+    gy=x2;
+    if maxit==k
+        fprintf('maxit-et elérte, az eredmény nem pontos')
+    end
+
+    nulla=zeros(100);
+    nulla=nulla(1,:);
+    xx=linspace(a,b);
+    yy=f(xx);
+    plot(gy,f(gy),'o',xx,yy,'blue',xx,nulla,'black');
+
+end
+-------------------------------------
+function [gy,k]=hur(a,b,e,maxit)
+    f=@(x) x.^3-3.*x+2;
+
+    if f(a)*f(b)>0
+        error(' Nem találunk gyököt ')
+    end
+
+    %felezési pont számolása
+    x0=a;
+    x1=b;
+    x2=x1-f(x1)*(x1-x0)/(f(x1)-f(x0));
+
+    k=0;
+    while abs(f(x2)) > e & k<maxit & abs(x1-x0) > e
+        x2=x1-f(x1)*(x1-x0)/(f(x1)-f(x0));
+        if f(x0)*f(x2)<0
+            x1=x2;
+        end
+        if f(x1)*f(x2)<0
+            x0=x2;
+        end
+        k=k+1;
+    end
+    
+    gy=x2;
+    if maxit==k
+        fprintf('maxit-et elérte, az eredmény nem pontos')
+    end
+end
+------------------------------------
+function [gy,k]=newton(f,fd,x0,maxit)
+    k=0;
+    x1=x0-f(x0)/fd(x0);
+    while f(x1)~=0 & k< maxit
+        x0=x1;
+        x1=x0-f(x0)/fd(x0);
+        k=k+1;
+    end
+    if maxit==k
+        fprintf('maxit-et elérte, az eredmény nem pontos')
+    end
+        gy=x1;
+end
+-------------------------------------------------------------------------------------
+>> [gyok, itszam]=felezo(0,3,10^-5,500)
+
+k =
+
+     1
+
+
+k =
+
+     2
+
+
+k =
+
+     3
+
+
+k =
+
+     4
+
+
+k =
+
+     5
+
+
+k =
+
+     6
+
+
+k =
+
+     7
+
+
+k =
+
+     8
+
+
+k =
+
+     9
+
+
+k =
+
+    10
+
+
+k =
+
+    11
+
+
+k =
+
+    12
+
+
+k =
+
+    13
+
+
+k =
+
+    14
+
+
+k =
+
+    15
+
+
+k =
+
+    16
+
+
+k =
+
+    17
+
+
+k =
+
+    18
+
+
+k =
+
+    19
+
+
+gyok =
+
+    2.0000
+
+
+itszam =
+
+    19
+
+>> [gyok, itszam]=felezo(0,3,10^-5,500)
+
+gyok =
+
+    2.0000
+
+
+itszam =
+
+    19
+
+>> [gyok, itszam]=felezo(0,3,10^-5,5)
+Unrecognized function or variable 'fprint'.
+
+Error in felezo (line 27)
+        fprint('maxit-et elérte, az eredmény nem pontos')
+ 
+>> [gyok, itszam]=felezo(0,3,10^-5,5)
+maxit-et elérte, az eredmény nem pontos
+gyok =
+
+    1.9688
+
+
+itszam =
+
+     5
+
+>> [gyok, itszam]=felezo(0,3,10^-5,500)
+
+gyok =
+
+    2.0000
+
+
+itszam =
+
+    19
+
+>> [gyok, itszam]=felezorajzol(0,3,10^-5,500)
+
+gyok =
+
+    2.0000
+
+
+itszam =
+
+    19
+
+>> [gyok, itszam]=hur(0,3,10^-5,500)
+maxit-et elérte, az eredmény nem pontos
+gyok =
+
+    2.0000
+
+
+itszam =
+
+   500
+
+>> [gyok, itszam]=hur(0,3,10^-5,500)
+
+gyok =
+
+    2.0000
+
+
+itszam =
+
+    20
+
+>> [gyok, itszam]=hur(0,3,10^-5,500)
+
+gyok =
+
+    2.0000
+
+
+itszam =
+
+    20
+
+>> [gyok, itszam]=hur(0,3,10^-5,500)
+Error using hur (line 5)
+ Nem találunk gyököt
+ 
+>> [gyok, itszam]=felezorajzol(0,3,10^-5,500)
+Error using felezorajzol (line 5)
+ Nem találunk gyököt
+ 
+>> [gyok, itszam]=felezorajzol(0,3,10^-5,500)
+
+gyok =
+
+    2.0000
+
+
+itszam =
+
+    19
+
+>> 
+>> f=@(x) x.^3-3.*x-2;
+>> fd=@(x)3.*x.^2-3;
+>> [gyok, itszam]=newton(f,fd,1.5,500)
+
+gyok =
+
+     2
+
+
+itszam =
+
+     5
+
+>> f=@(x) x.^3-3.*x+2;
+>> [gyok, itszam]=newton(f,fd,1.5,500)
+
+gyok =
+
+    1.0000
+
+
+itszam =
+
+    26
+
+>> f=@(x) x.^3-5.*x;
+>> fd=@(x)3.*x.^2-5;
+>> [gyok, itszam]=newton(f,fd,1,500)
+maxit-et elérte, az eredmény nem pontos
+gyok =
+
+    -1
+
+
+itszam =
+
+   500
+
+>> xx=linspace(0,1);
+>> yy=f(xx);
+>> xx=linspace(-2,1);
+>> yy=f(xx);
+>> plot(xx,yy);
+>> f=@(x) x.^2-5;
+>> fd=@(x)2.*x;
+>> [gyok, itszam]=newton(f,fd,2,500)
+maxit-et elérte, az eredmény nem pontos
+gyok =
+
+    2.2361
+
+
+itszam =
+
+   500
+
+>> sqrt(5)
+
+ans =
+
+    2.2361
+
+>> f=@(x) cos(4*x.^3)-x.^2.*sin(x);
+>> [xopt,fopt]=fsolve(f,0)
+
+No solution found.
+
+fsolve stopped because the problem appears regular as measured by the gradient,
+but the vector of function values is not near zero as measured by the
+value of the function tolerance.
+
+<stopping criteria details>
+
+xopt =
+
+     0
+
+
+fopt =
+
+     1
+
+>>  [xopt,fopt]=fzero(f,0)
+
+xopt =
+
+   -0.8000
+
+
+fopt =
+
+   1.6653e-16
+
+>> f=@(x) 13-9*cos(x).^2-12*sin(x);
+>> xx=linspace(-4,4);
+>> yy=f(xx);
+>> plot(xx,yy)
+>> [x,fval]=fminbnd(f,-4,-3);
+>> [x,fval]=fminbnd(f,-4,-3)
+
+x =
+
+   -3.8713
+
+
+fval =
+
+   1.3702e-09
+
+>> [x,fval]=fminbnd(f,0,1)
+
+x =
+
+    0.7297
+
+
+fval =
+
+   9.2491e-11
+
+>> [x,fval]=fminbnd(f,2,3)
+
+x =
+
+    2.4119
+
+
+fval =
+
+   1.7231e-13
+
+>> f=@(x) cos(x)-3.*x;
+>> [xopt,fopt]=fsolve(f,0)
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+<stopping criteria details>
+
+xopt =
+
+    0.3168
+
+
+fopt =
+
+  -7.2764e-10
+
+>> f=@(x) 3.*x.^3-12.*x+4;
+>> [xopt,fopt]=fsolve(f,0)
+
+Equation solved.
+
+fsolve completed because the vector of function values is near zero
+as measured by the value of the function tolerance, and
+the problem appears regular as measured by the gradient.
+
+<stopping criteria details>
+
+xopt =
+
+    0.3435
+
+
+fopt =
+
+   2.4679e-09
+
+>> 
