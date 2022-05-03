@@ -1,0 +1,556 @@
+>> %[xopt,fopt]=fminbnd(f,a,b)
+>> f=@(x) sqrt(x)-2*sin(x);
+>> xx=linspace(0,pi);
+>> yy=f(xx);
+>> plot(xx,yy)
+>> hold on;
+>> [xopt,fopt]=fminbnd(f,0,pi)
+
+xopt =
+
+    1.3543
+
+
+fopt =
+
+   -0.7896
+
+>> plot(xopt,fopt,'o')
+>> [xopt,fopt]=fminsearch(f,x0)
+Unrecognized function or variable 'x0'.
+ 
+>> [xopt,fopt]=fminsearch(f,0.5)
+
+xopt =
+
+    1.3543
+
+
+fopt =
+
+   -0.7896
+
+>> [xopt,fopt]=fminsearch(f,0)
+
+xopt =
+
+     0
+
+
+fopt =
+
+     0
+
+>> [xopt,fopt]=fminsearch(f,0.1)
+
+xopt =
+
+    1.3543
+
+
+fopt =
+
+   -0.7896
+
+>> [xopt,fopt]=fminsearch(f,3)
+
+xopt =
+
+    1.3542
+
+
+fopt =
+
+   -0.7896
+
+>> [xopt,fopt]=fminunc(f,0.5)
+
+Local minimum found.
+
+Optimization completed because the size of the gradient is less than
+the value of the optimality tolerance.
+
+<stopping criteria details>
+
+xopt =
+
+    1.3543
+
+
+fopt =
+
+   -0.7896
+
+>> [xopt,fopt]=fminunc(f,0.1)
+
+Local minimum found.
+
+Optimization completed because the size of the gradient is less than
+the value of the optimality tolerance.
+
+<stopping criteria details>
+
+xopt =
+
+    1.3543
+
+
+fopt =
+
+   -0.7896
+
+>> [xopt,fopt]=fminunc(f,3)
+
+Local minimum found.
+
+Optimization completed because the size of the gradient is less than
+the value of the optimality tolerance.
+
+<stopping criteria details>
+
+xopt =
+
+    1.3543
+
+
+fopt =
+
+   -0.7896
+
+>> f=@(x) x.^2+cos(3.*x);
+>> xx=linspace(0,6);
+>> yy=f(xx);
+>> plot(xx,yy)
+>> 
+>> plot(xx,yy)
+>> [xopt,fopt]=fminbnd(f,0,pi)
+
+xopt =
+
+    0.8471
+
+
+fopt =
+
+   -0.1076
+
+>> [xopt,fopt]=fminbnd(f,0,6)
+
+xopt =
+
+    0.8471
+
+
+fopt =
+
+   -0.1076
+
+>> f=@(x) -x.^2-cos(3.*x);
+>> yy=f(xx);
+>> plot(xx,yy)
+>> [xopt,fopt]=fminbnd(f,0,6)
+
+xopt =
+
+    5.9999
+
+
+fopt =
+
+  -36.6595
+
+>> hold on;
+>> f=@(x) x.^2+cos(3.*x);
+>> yy=f(xx);
+>> plot(xx,yy)
+>> hold on;
+>> [xopt,fopt]=fminbnd(f,0,6)
+
+xopt =
+
+    0.8471
+
+
+fopt =
+
+   -0.1076
+
+>> plot(xopt,fopt,'o')
+>> hold on;
+>> f=@(x) -x.^2-cos(3.*x);
+>> yy=f(xx);
+>> plot(xopt,-fopt,'o')
+>> [xopt,fopt]=fminbnd(f,0,6)
+
+xopt =
+
+    5.9999
+
+
+fopt =
+
+  -36.6595
+
+>> plot(xopt,-fopt,'o')
+>> f=@(x) sin(2.*x).*sin(3.*x);
+>> xx=linspace(0,5);
+>> yy=f(xx);
+>> plot(xx,yy)
+>> [xopt,fopt]=fminbnd(f,0,5)
+
+xopt =
+
+    3.7471
+
+
+fopt =
+
+   -0.9079
+
+>> [xopt,fopt]=fminsearch(f,0.5)
+
+xopt =
+
+  -4.4409e-16
+
+
+fopt =
+
+   1.1833e-30
+
+>> [xopt1,fopt1]=fminsearch(f,0)
+
+xopt1 =
+
+     0
+
+
+fopt1 =
+
+     0
+
+>> [xopt2,fopt2]=fminsearch(f,1.3)
+
+xopt2 =
+
+    1.2954
+
+
+fopt2 =
+
+   -0.3547
+
+>> [xopt3,fopt3]=fminsearch(f,2.5)
+
+xopt3 =
+
+    2.5361
+
+
+fopt3 =
+
+   -0.9079
+
+>> [xopt4,fopt4]=fminsearch(f,3.7)
+
+xopt4 =
+
+    3.7471
+
+
+fopt4 =
+
+   -0.9079
+
+>> [xopt5,fopt5]=fminsearch(f,5)
+
+xopt5 =
+
+    4.9878
+
+
+fopt5 =
+
+   -0.3547
+
+>> [xopt5,fopt5]=fminsearch(-f,5)
+Unary operator '-' is not supported for operand of type
+'function_handle'.
+ 
+>> 
+>> [xopt5,fopt5]=fminsearch(-1.*f,5)
+Operator '.*' is not supported for operands of type
+'function_handle'.
+ 
+>> f=-f
+Unary operator '-' is not supported for operand of type
+'function_handle'.
+ 
+>> f=@(x) 250.*sqrt(x.^2+100)+100.*(20-x);
+>> [xopt,fopt]=fminbnd(f,0,20)
+
+xopt =
+
+    4.3644
+
+
+fopt =
+
+   4.2913e+03
+
+>> [xopt,fopt]=fminbnd(f,0,10)
+
+xopt =
+
+    4.3644
+
+
+fopt =
+
+   4.2913e+03
+
+>> [xopt,fopt]=fminbnd(f,0,20)
+
+xopt =
+
+    4.3644
+
+
+fopt =
+
+   4.2913e+03
+
+>> f=@(r) r.*2*pi.*(1000./(r.^2.*pi)+2.*r.^2.*pi;
+ f=@(r) r.*2*pi.*(1000./(r.^2.*pi)+2.*r.^2.*pi;
+                                              ↑
+Invalid expression. When calling a function or indexing a variable,
+use parentheses. Otherwise, check for mismatched delimiters.
+ 
+Did you mean:
+>> f=@(r) r.*2*pi.*(1000./(r.^2.*pi)+2.*r.^2.*pi;
+ f=@(r) r.*2*pi.*(1000./(r.^2.*pi)+2.*r.^2.*pi;
+                                              ↑
+Invalid expression. When calling a function or indexing a variable,
+use parentheses. Otherwise, check for mismatched delimiters.
+ 
+Did you mean:
+>> f=@(r) r.*2*pi.*(1000./(r.^2.*pi))+2.*r.^2.*pi;
+>> f=@(r) r.*2*pi.*(1000./(r.^2.*pi))+2.*r.^2.*pi;
+>> [xopt,fopt]=fminbnd(f,0,17)
+
+xopt =
+
+    5.4193
+
+
+fopt =
+
+  553.5810
+
+>> 1000/(xopt^2*pi)
+
+ans =
+
+   10.8385
+
+>> f=@(x) -(20-2.*x).*(10-2.*x).*x
+
+f =
+
+  function_handle with value:
+
+    @(x)-(20-2.*x).*(10-2.*x).*x
+
+>> [xopt,fopt]=fminbnd(f,0,10)
+
+xopt =
+
+    2.1132
+
+
+fopt =
+
+ -192.4501
+
+>> 15-xopt
+
+ans =
+
+   12.8868
+
+>> 15-2*xopt
+
+ans =
+
+   10.7735
+
+>> 20-2*xopt
+
+ans =
+
+   15.7735
+
+>> f=@(x) -(20-2.*x).*(15-2.*x).*x
+
+f =
+
+  function_handle with value:
+
+    @(x)-(20-2.*x).*(15-2.*x).*x
+
+>> [xopt,fopt]=fminbnd(f,0,10)
+
+xopt =
+
+    2.8287
+
+
+fopt =
+
+ -379.0378
+
+>> 15-2*xopt
+
+ans =
+
+    9.3426
+
+>> 20-2*xopt
+
+ans =
+
+   14.3426
+
+>> xx=linspace(-2,2);
+yy=xx;
+>> 
+>> [X,Y]=meshgrid(xx,yy);
+>> Z=X.^3+Y.^3-3*X-3*Y;
+figure; mesh(X,Y,Z)
+>> xx=linspace(-2,2);
+yy=xx;
+[X,Y]=meshgrid(xx,yy);
+Z=X.^3+Y.^3-3*X-3*Y;
+figure; contour(X,Y,Z)
+axis equal
+>> xx=linspace(-2,2);
+yy=xx;
+[X,Y]=meshgrid(xx,yy);
+Z=X.^3+Y.^3-3*X-3*Y;
+figure; contour(X,Y,Z,'ShowText','on')
+axis equal
+>> %a szintvonalak
+xx=linspace(-2,2); yy=xx;
+[X,Y]=meshgrid(xx,yy);
+Z=X.^3+Y.^3-3*X-3*Y;
+figure; contour(X,Y,Z)
+axis equal
+%a gradiensmezo
+xx=linspace(-2,2,11); yy=xx;
+[X,Y]=meshgrid(xx,yy);
+dX=3*X.^2-3;
+dY=3*Y.^2-3;
+hold on; quiver(X,Y,dX,dY)
+>> 
+>> xx=linspace(-2,2);
+yy=xx;
+[X,Y]=meshgrid(xx,yy);
+Z=10-X.^2-Y.^2;
+figure; mesh(X,Y,Z)
+>> xx=linspace(-2,2);
+yy=xx;
+[X,Y]=meshgrid(xx,yy);
+Z=X.^2.*Y-2.*X.*Y.^2+3.*X.*Y+2;
+figure; mesh(X,Y,Z)
+>> xx=linspace(-2,2);
+yy=xx;
+[X,Y]=meshgrid(xx,yy);
+Z=X.^3-X.^2.*Y.^2-X+Y.^2;
+figure; mesh(X,Y,Z)
+>> xx=linspace(-4,4);
+yy=xx;
+[X,Y]=meshgrid(xx,yy);
+Z=X.^3-X.^2.*Y.^2-X+Y.^2;
+figure; mesh(X,Y,Z)
+>> xx=linspace(-2,2);
+yy=xx;
+[X,Y]=meshgrid(xx,yy);
+>> Z=10-X.^2-Y.^2;
+>> figure; mesh(X,Y,Z)
+>> f=@(x) 10-x(1).^2-x(2).^2;
+>> [xopt,fopt]=fminsearch(f,[0.5,0.5])
+ 
+Exiting: Maximum number of function evaluations has been exceeded
+         - increase MaxFunEvals option.
+         Current function value: -2708324968780236875469763503721704278148963896517190431225196551188882178642646610739200.000000 
+
+
+xopt =
+
+   1.0e+43 *
+
+    5.1163    0.9523
+
+
+fopt =
+
+  -2.7083e+87
+
+>> f=@(x) x(1).^3+x(2).^3-3.*x(1)-3.*y(2);
+>> [xopt,fopt]=fminsearch(f,[0.8,0.8])
+Unrecognized function or variable 'y'.
+
+Error in @(x)x(1).^3+x(2).^3-3.*x(1)-3.*y(2)
+
+Error in fminsearch (line 201)
+fv(:,1) = funfcn(x,varargin{:});
+ 
+>> f=@(x) x(1).^3+x(2).^3-3.*x(1)-3.*x(2);
+>> [xopt,fopt]=fminsearch(f,[0.8,0.8])
+
+xopt =
+
+    1.0000    1.0000
+
+
+fopt =
+
+   -4.0000
+
+>> f=@(x) x(1).^4+x(1).^3-3.*x(1).^2+*x(2).^2-x(2)+1;
+ f=@(x) x(1).^4+x(1).^3-3.*x(1).^2+*x(2).^2-x(2)+1;
+                                   ↑
+Invalid use of operator.
+ 
+>> f=@(x) x(1).^4+x(1).^3-3.*x(1).^2+x(2).^2-x(2)+1;
+>> [xopt,fopt]=fminsearch(f,[0.8,0.8])
+
+xopt =
+
+    0.9059    0.5000
+
+
+fopt =
+
+   -0.2951
+
+>> [xopt,fopt]=fminsearch(f,[0.3,0.3])
+
+xopt =
+
+    0.9059    0.5000
+
+
+fopt =
+
+   -0.2951
+
+>> f=@(x) x(1).^2.*x(2)-2.*x(1).*x(2).^2+3.*x(1).*x(2)+2;
+>> xx=linspace(-2,2);
+>> yy=xx;
+>> xx=linspace(-2,2);
+yy=xx;
+[X,Y]=meshgrid(xx,yy);
+Z=X.^2.*Y-2.*X.*Y.^2+3.*X.*Y+2;
+figure; mesh(X,Y,Z)
+>> 
